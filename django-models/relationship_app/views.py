@@ -52,6 +52,11 @@ class LibraryDetailView(DetailView):
     template_name = 'relationship_app/library_detail.html'
     context_object_name = 'library'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['books'] = self.object.books.all()
+        return context
+
 class BookListView(PermissionRequiredMixin, ListView):
     model = Book
     template_name = 'relationship_app/book_list.html'
@@ -104,7 +109,7 @@ def user_register(request):
             return redirect('login')
     else:
         form = UserCreationForm()
-    return render(request, 'relationship_app/register.html', {'form': form'})
+    return render(request, 'relationship_app/register.html', {'form': form})
 
 # Role-based views
 
