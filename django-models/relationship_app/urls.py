@@ -22,9 +22,9 @@ urlpatterns = [
     path('library/<int:pk>/', LibraryDetailView.as_view(), name='library_detail'),
 
     # User authentication URLs
-    path('login/', user_login, name='login'),
-    path('logout/', user_logout, name='logout'),
-    path('register/', user_register, name='register'),
+    path('login/', LogoutView.as_view(template_name= 'relationship_app/login.html'), name= 'login'),
+    path('logout/', LogoutView.as_view(template_name= 'relationship_app/logout.html'), name= 'logout'),
+    path('register/', views.register.as_view(), name='register'),
 
     # Role-based views URLs
     path('admin/', admin_view, name='admin_view'),
