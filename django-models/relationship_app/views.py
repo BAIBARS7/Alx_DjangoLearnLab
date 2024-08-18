@@ -1,22 +1,34 @@
-from django.shortcuts import render
-from .models import Book  # Assuming the Book model is in the same app
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from .models import Book, Library
+from .forms import BookForm
 
+# Helper functions for role-based access
+def is_admin(user):
+    return user.userprofile.role == 'Admin'
+
+def is_librarian(user):
+    return user.userprofile.role == 'Librarian'
+
+def is_member(user):
+    return user.userprofile.role == 'Member'
+
+# List books
 def list_books(request):
     books = Book.objects.all()
     return render(request, 'relationship_app/list_books.html', {'books': books})
 
-from django.views.generic import DetailView
-from .models import Library  # Assuming the Library model is in the same app
-
+# Library Detail View
 class LibraryDetailView(DetailView):
     model = Library
     template_name = 'relationship_app/library_detail.html'
     context_object_name = 'library'
 
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth.decorators import login_required
+# User Authentication Views
 
 # Login view
 def user_login(request):
@@ -46,17 +58,7 @@ def user_register(request):
         form = UserCreationForm()
     return render(request, 'relationship_app/register.html', {'form': form})
 
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required, user_passes_test
-
-def is_admin(user):
-    return user.userprofile.role == 'Admin'
-
-def is_librarian(user):
-    return user.userprofile.role == 'Librarian'
-
-def is_member(user):
-    return user.userprofile.role == 'Member'
+# Role-based Views
 
 # Admin view
 @login_required
@@ -76,14 +78,7 @@ def librarian_view(request):
 def member_view(request):
     return render(request, 'relationship_app/member_view.html')
 
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import permission_required
-from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Book
-from .forms import BookForm
-
-# Function-based views
+# Function-based Views for Book CRUD Operations
 
 @permission_required('relationship_app.can_add_book', raise_exception=True)
 def add_book(request):
@@ -116,7 +111,7 @@ def delete_book(request, pk):
         return redirect('book_list')
     return render(request, 'relationship_app/delete_book.html', {'book': book})
 
-# Class-based views
+# Class-based Views for Book CRUD Operations
 
 class BookListView(PermissionRequiredMixin, ListView):
     model = Book
