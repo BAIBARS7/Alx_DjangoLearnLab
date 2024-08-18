@@ -1,7 +1,11 @@
 from django.urls import path
-from .views import BookListView, BookDetailView, BookCreateView, BookUpdateView, BookDeleteView
-from .views import add_book, edit_book, delete_book
-from . import views
+from .views import (
+    BookListView, BookDetailView, BookCreateView, BookUpdateView, BookDeleteView,
+    add_book, edit_book, delete_book,
+    user_login, user_logout, user_register,
+    admin_view, librarian_view, member_view,
+    LibraryDetailView
+)
 
 urlpatterns = [
     # Book-related URLs
@@ -12,15 +16,15 @@ urlpatterns = [
     path('books/<int:pk>/delete/', delete_book, name='delete_book'),
 
     # Library detail URL
-    path('library/<int:pk>/', views.LibraryDetailView.as_view(), name='library_detail'),
+    path('library/<int:pk>/', LibraryDetailView.as_view(), name='library_detail'),
 
     # User authentication URLs
-    path('login/', views.user_login, name='login'),
-    path('logout/', views.user_logout, name='logout'),
-    path('register/', views.user_register, name='register'),
+    path('login/', user_login, name='login'),
+    path('logout/', user_logout, name='logout'),
+    path('register/', user_register, name='register'),
 
     # Role-based views URLs
-    path('admin/', views.admin_view, name='admin_view'),
-    path('librarian/', views.librarian_view, name='librarian_view'),
-    path('member/', views.member_view, name='member_view'),
+    path('admin/', admin_view, name='admin_view'),
+    path('librarian/', librarian_view, name='librarian_view'),
+    path('member/', member_view, name='member_view'),
 ]
