@@ -9,7 +9,7 @@ from .views import (
 
 urlpatterns = [
     # Book-related URLs
-    path('books/', BookListView.as_view(), name='book_list'),
+    path('list_books/', BookListView.as_view(), name="book_list"),
     path('books/<int:pk>/', BookDetailView.as_view(), name='book_detail'),
     path('add_book/add/', add_book, name="add_book"),
     path('edit_book/<int:pk>/edit/', edit_book, name="edit_book"),
