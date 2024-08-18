@@ -4,8 +4,9 @@ from .views import (
     add_book, edit_book, delete_book,
     user_login, user_logout, user_register,
     admin_view, librarian_view, member_view,
-    LibraryDetailView,list_books
+    LibraryDetailView,
 )
+from .views import list_books
 
 urlpatterns = [
     # Book-related URLs
