@@ -16,6 +16,8 @@ urlpatterns = [
     path('edit_book/<int:pk>/edit/', edit_book, name="edit_book"),
     path('delete_book/<int:pk>/delete/', delete_book, name="delete_book"),
 
+    path('list_books/', list_books, name='list_books'),
+
     # Library detail URL
     path('library/<int:pk>/', LibraryDetailView.as_view(), name='library_detail'),
 
