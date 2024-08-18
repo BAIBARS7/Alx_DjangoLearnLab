@@ -87,6 +87,10 @@ from .models import Book
 from .forms import BookForm
 
 # Function-based views
+@login_required
+def list_books(request):
+    books = Book.objects.all()
+    return render(request, 'relationship_app/list_books.html', {'books': books})
 
 @permission_required('relationship_app.can_add_book', raise_exception=True)
 def add_book(request):
