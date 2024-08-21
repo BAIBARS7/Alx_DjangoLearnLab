@@ -154,3 +154,6 @@ SECURE_HSTS_SECONDS = 3600  # Enable HTTP Strict Transport Security
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 
+# CSRF and session cookies are secured to only be transmitted over HTTPS
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
