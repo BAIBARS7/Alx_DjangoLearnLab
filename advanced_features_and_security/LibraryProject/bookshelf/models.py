@@ -59,3 +59,23 @@ class CustomUserManager(models.Manager):
         if extra_fields.get('is_superuser') is not True:
             raise ValueError('Superuser must have is_superuser=True.')
         return self.create_user(username, email, password, **extra_fields)
+
+from django.contrib.auth.models import User
+
+class Book(models.Model):
+    title = models.CharField(max_length=200)
+    author = models.CharField(max_length=100)
+    published_date = models.DateField()
+    isbn = models.CharField(max_length=13, unique=True)
+    summary = models.TextField()
+
+    class Meta:
+        permissions = [
+            ("can_view", "Can view books"),
+            ("can_create", "Can create books"),
+            ("can_edit", "Can edit books"),
+            ("can_delete", "Can delete books"),
+        ]
+
+    def __str__(self):
+        return self.title
