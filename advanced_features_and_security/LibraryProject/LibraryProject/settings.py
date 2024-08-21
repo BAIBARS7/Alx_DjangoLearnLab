@@ -181,3 +181,7 @@ X_FRAME_OPTIONS = 'DENY'  # Prevents clickjacking
 SECURE_CONTENT_TYPE_NOSNIFF = True  # Prevents MIME-sniffing
 SECURE_BROWSER_XSS_FILTER = True  # Enables XSS filtering in browsers
 
+# settings.py
+
+# Specify the header to check for SSL
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
