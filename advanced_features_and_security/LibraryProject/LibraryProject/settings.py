@@ -140,6 +140,15 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 
+MIDDLEWARE = [
+    # other middleware
+    'csp.middleware.CSPMiddleware',
+]
+
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_STYLE_SRC = ("'self'", 'fonts.googleapis.com')
+CSP_SCRIPT_SRC = ("'self'", 'cdnjs.cloudflare.com')
+
 SECURE_SSL_REDIRECT = True  # Redirect all non-HTTPS requests to HTTPS
 SECURE_HSTS_SECONDS = 3600  # Enable HTTP Strict Transport Security
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
