@@ -27,3 +27,7 @@ def delete_book(request, book_id):
         book.delete()
         return redirect('book_list')
     return render(request, 'bookshelf/confirm_delete.html', {'book': book})
+
+# CSRF and session cookies are secured to only be transmitted over HTTPS
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
