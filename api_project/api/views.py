@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
 
-class BookList(ListAPIView):
+class BookList(rest_framework.generics.ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
 
