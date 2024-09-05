@@ -2,18 +2,42 @@ from django.shortcuts import render
 
 # Create your views here.
 from rest_framework import filters
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.response import Response
 from .models import Book
 from .serializers import BookSerializer
+from django.urls import reverse
+from datetime import date
+from django.urls import reverse
+from rest_framework import status
+from rest_framework.test import APITestCase, APIClient
+from .models import Author
+from django.contrib.auth.models import User
 
 # ListView: Retrieve all books
 class BookListView(generics.ListCreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
+    
+    # Add filtering options
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['title', 'author__name', 'publication_year']  # Filter by title, author name, and publication year
+    filter_backends = [filters.SearchFilter]  # Add SearchFilter
+    search_fields = ['title', 'author__name']  # Allow searching by title or author's name
+    filter_backends = [filters.OrderingFilter]  # Add OrderingFilter
+    ordering_fields = ['title', 'publication_year']  # Users can order by title or publication year
+    ordering = ['title']
+    
+    #This view handles retrieving and creating Book instances. It includes the following advanced query capabilities:
+    
+    #- Filtering: Users can filter books by title, author name, and publication year.Example: /books/?title=Example&author__name=John&publication_year=2022
+    
+    #- Searching: Users can perform text searches on the title and author name fields.Example: /books/?search=Example
+    
+    #- Ordering: Users can order the results by title or publication year.Example: /books/?ordering=title or /books/?ordering=-publication_year (for descending order)
 
 # DetailView: Retrieve a single book by ID
 class BookDetailView(generics.RetrieveUpdateDestroyAPIView):
@@ -62,34 +86,6 @@ class BookDeleteView(generics.DestroyAPIView):
     permission_classes = [IsAuthenticated]  # Only authenticated users can delete
 
 #  This view handles the creation of new Book instances. It is restricted to authenticated users, and it includes custom validation logic to ensure that the publication year is valid.
-
-class BookListView(generics.ListCreateAPIView):
-    queryset = Book.objects.all()
-    serializer_class = BookSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
-    
-    # Add filtering options
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['title', 'author__name', 'publication_year']  # Filter by title, author name, and publication year
-    filter_backends = [filters.SearchFilter]  # Add SearchFilter
-    search_fields = ['title', 'author__name']  # Allow searching by title or author's name
-    filter_backends = [filters.OrderingFilter]  # Add OrderingFilter
-    ordering_fields = ['title', 'publication_year']  # Users can order by title or publication year
-    ordering = ['title']
-    
-    #This view handles retrieving and creating Book instances. It includes the following advanced query capabilities:
-    
-    #- Filtering: Users can filter books by title, author name, and publication year.Example: /books/?title=Example&author__name=John&publication_year=2022
-    
-    #- Searching: Users can perform text searches on the title and author name fields.Example: /books/?search=Example
-    
-    #- Ordering: Users can order the results by title or publication year.Example: /books/?ordering=title or /books/?ordering=-publication_year (for descending order)
-
-from django.urls import reverse
-from rest_framework import status
-from rest_framework.test import APITestCase, APIClient
-from .models import Book, Author
-from django.contrib.auth.models import User
 
 class BookAPITests(APITestCase):
     def setUp(self):
