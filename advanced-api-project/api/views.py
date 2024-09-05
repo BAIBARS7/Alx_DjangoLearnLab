@@ -15,6 +15,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase, APIClient
 from .models import Author
 from django.contrib.auth.models import User
+from django_filters import rest_framework
 
 # ListView: Retrieve all books
 class BookListView(generics.ListCreateAPIView):
