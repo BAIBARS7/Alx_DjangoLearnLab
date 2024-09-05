@@ -17,12 +17,13 @@ from rest_framework.test import APITestCase, APIClient
 from .models import Author
 from django.contrib.auth.models import User
 from django_filters import rest_framework
+from rest_framework.permissions import AllowAny
 
 # ListView: Retrieve all books
 class BookListView(generics.ListCreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [AllowAny]
     
     # Add filtering options
     filter_backends = [DjangoFilterBackend]
@@ -45,7 +46,7 @@ class BookListView(generics.ListCreateAPIView):
 class BookDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [AllowAny]
 
 # CreateView: Add a new book
 class BookCreateView(generics.CreateAPIView):
