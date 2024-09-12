@@ -21,19 +21,20 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('profile/', views.profile, name='profile'),
 
-    # Blog Post URLs
-    path('', PostListView.as_view(), name='post-list'),
-    path('posts/new/', PostCreateView.as_view(), name='post-create'),
-    path('posts/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
-    path('posts/<int:pk>/edit/', PostUpdateView.as_view(), name='post-update'),
-    path('posts/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
+    # Blog post URLs
+    path('', PostListView.as_view(), name='post-list'),  # List of posts
+    path('posts/', PostListView.as_view(), name='post-list'),  # List of posts
+    path('posts/new/', PostCreateView.as_view(), name='post-create'),  # Create new post
+    path('posts/<int:pk>/', PostDetailView.as_view(), name='post-detail'),  # View post detail
+    path('posts/<int:pk>/edit/', PostUpdateView.as_view(), name='post-update'),  # Edit post
+    path('posts/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),  # Delete post
 
     # Comment URLs
-    path('posts/<int:pk>/comments/new/', CommentCreateView.as_view(), name='add-comment'),
-    path('comments/<int:pk>/edit/', CommentUpdateView.as_view(), name='edit-comment'),
-    path('comments/<int:pk>/delete/', CommentDeleteView.as_view(), name='delete-comment'),
+    path('posts/<int:pk>/comments/new/', CommentCreateView.as_view(), name='add-comment'),  # Add comment
+    path('comments/<int:pk>/edit/', CommentUpdateView.as_view(), name='edit-comment'),  # Edit comment
+    path('comments/<int:pk>/delete/', CommentDeleteView.as_view(), name='delete-comment'),  # Delete comment
 
-    # Search and Tag URLs
-    path('search/', search_posts, name='search-posts'),
-    path('tags/<str:tag_name>/', TaggedPostListView.as_view(), name='tagged-posts'),
+    # Search and Tagging URLs
+    path('search/', search_posts, name='search-posts'),  # Search posts
+    path('tags/<str:tag_name>/', TaggedPostListView.as_view(), name='tagged-posts'),  # Posts by tag
 ]
