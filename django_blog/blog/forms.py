@@ -14,7 +14,7 @@ class CustomUserCreationForm(UserCreationForm):
         fields = ['username', 'email', 'password1', 'password2']
 
 class PostForm(forms.ModelForm):
-    tags = TagField(widget=TagWidget(), required=False)  # Use TagWidget here
+    tags = TagField(widget=TagWidget(), required=False)  # Use TagWidget for tags
 
     class Meta:
         model = Post
