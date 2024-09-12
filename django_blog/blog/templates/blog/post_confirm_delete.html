@@ -1,0 +1,21 @@
+{% extends "base_generic.html" %}
+{% block content %}
+<h2>Delete Post</h2>
+<p>Are you sure you want to delete "{{ post.title }}"?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirm</button>
+</form>
+<a href="{% url 'post-list' %}">Cancel</a>
+{% endblock %}
+
+{% extends 'base_generic.html' %}
+
+{% block content %}
+  <h2>Are you sure you want to delete "{{ post.title }}"?</h2>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirm</button>
+    <a href="{% url 'post-list' %}">Cancel</a>
+  </form>
+{% endblock %}

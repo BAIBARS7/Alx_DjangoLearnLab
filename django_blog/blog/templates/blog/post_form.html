@@ -1,0 +1,21 @@
+{% extends "base_generic.html" %}
+{% block content %}
+<h2>{% if form.instance.pk %}Edit{% else %}Create{% endif %} Post</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+<a href="{% url 'post-list' %}">Cancel</a>
+{% endblock %}
+
+{% extends 'base_generic.html' %}
+
+{% block content %}
+  <h2>{{ view.title }}</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+  </form>
+{% endblock %}

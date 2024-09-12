@@ -1,0 +1,29 @@
+{% extends "base_generic.html" %}
+{% block content %}
+<h2>Blog Posts</h2>
+<a href="{% url 'post-create' %}">Create New Post</a>
+<ul>
+    {% for post in posts %}
+    <li>
+        <a href="{% url 'post-detail' post.pk %}">{{ post.title }}</a>
+        <p>{{ post.content|truncatewords:30 }}</p>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
+
+{% extends 'base_generic.html' %}
+
+{% block content %}
+  <h2>All Posts</h2>
+  <ul>
+    {% for post in posts %}
+      <li><a href="{% url 'post-detail' post.pk %}">{{ post.title }}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}
+
+<form method="GET" action="{% url 'search-posts' %}">
+    <input type="text" name="q" placeholder="Search posts..." required>
+    <button type="submit">Search</button>
+</form>
