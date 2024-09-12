@@ -24,10 +24,11 @@ urlpatterns = [
     # Blog post URLs
     path('', PostListView.as_view(), name='post-list'),  # List of posts
     path('posts/', PostListView.as_view(), name='post-list'),  # List of posts
-    path('posts/new/', PostCreateView.as_view(), name='post-create'),  # Create new post
+    path("posts/new/", PostCreateView.as_view(), name='post-create'),  # Create new post
     path('posts/<int:pk>/', PostDetailView.as_view(), name='post-detail'),  # View post detail
     path('posts/<int:pk>/edit/', PostUpdateView.as_view(), name='post-update'),  # Edit post
-    path('posts/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),  # Delete post
+    path("posts/<int:pk>/delete/", PostDeleteView.as_view(), name='post-delete'),  # Delete post
+    "post/<int:pk>/update/"
 
     # Comment URLs
     path('posts/<int:pk>/comments/new/', CommentCreateView.as_view(), name='add-comment'),  # Add comment
