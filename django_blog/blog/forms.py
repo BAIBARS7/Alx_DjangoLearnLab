@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from .models import Post
 from .models import Comment
 from .models import Tag
+from taggit.forms import TagField, TagWidget
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -13,11 +14,12 @@ class CustomUserCreationForm(UserCreationForm):
         fields = ['username', 'email', 'password1', 'password2']
 
 
-
 class PostForm(forms.ModelForm):
+    tags = TagField(required=False)  # Use TagField for tag input
+
     class Meta:
         model = Post
-        fields = ['title', 'content']
+        fields = ['title', 'content', 'tags']  # Include tags in the fields
 
 
 class CommentForm(forms.ModelForm):
@@ -30,11 +32,3 @@ class CommentForm(forms.ModelForm):
         if not content or content.isspace():
             raise forms.ValidationError("Comment cannot be empty")
         return content
-
-
-class PostForm(forms.ModelForm):
-    tags = forms.ModelMultipleChoiceField(queryset=Tag.objects.all(), required=False)
-
-    class Meta:
-        model = Post
-        fields = ['title', 'content', 'tags']  # Include tags in the fields
