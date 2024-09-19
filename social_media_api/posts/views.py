@@ -49,7 +49,8 @@ class LikePostView(generics.CreateAPIView):
             )
             return Response({"message": "Post liked."}, status=201)
         return Response({"message": "You already liked this post."}, status=400)
-
+Post.objects.filter(author__in=following_users).order_by
+following.all()
 class UnlikePostView(generics.DestroyAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
