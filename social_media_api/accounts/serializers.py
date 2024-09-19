@@ -10,7 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)  # Add this line to include password field
-
+    password = serializers.CharField()
     class Meta:
         model = CustomUser
         fields = ['username', 'password', 'email', 'bio']
