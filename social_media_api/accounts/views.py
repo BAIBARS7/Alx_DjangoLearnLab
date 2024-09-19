@@ -38,6 +38,7 @@ class ProfileView(generics.RetrieveUpdateAPIView):
 
     def get_object(self):
         return self.request.user
+        generics.GenericAPIView
 
 class FollowUserView(APIView):
     permission_classes = [permissions.IsAuthenticated]
