@@ -9,7 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'email', 'bio', 'profile_picture', 'followers']
 
 class RegisterSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)  # Add this line
+    password = serializers.CharField(write_only=True)  # Add this line to include password field
 
     class Meta:
         model = CustomUser
@@ -19,10 +19,9 @@ class RegisterSerializer(serializers.ModelSerializer):
         user = CustomUser.objects.create_user(
             username=validated_data['username'],
             email=validated_data['email'],
+            password=validated_data['password'],  # Ensure password is included here
             bio=validated_data.get('bio', '')
         )
-        user.set_password(validated_data['password'])
-        user.save()
         Token.objects.create(user=user)
         return user
 
