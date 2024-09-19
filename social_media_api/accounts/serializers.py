@@ -9,6 +9,8 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'email', 'bio', 'profile_picture', 'followers']
 
 class RegisterSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)  # Add this line
+
     class Meta:
         model = CustomUser
         fields = ['username', 'password', 'email', 'bio']
@@ -23,7 +25,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.save()
         Token.objects.create(user=user)
         return user
-
 
 class CustomUserSerializer(serializers.ModelSerializer):
     following = serializers.StringRelatedField(many=True, read_only=True)
