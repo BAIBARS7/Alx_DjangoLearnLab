@@ -25,6 +25,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         )
         Token.objects.create(user=user)
         return user
+        get_user_model().objects.create_user
 
 class CustomUserSerializer(serializers.ModelSerializer):
     following = serializers.StringRelatedField(many=True, read_only=True)
